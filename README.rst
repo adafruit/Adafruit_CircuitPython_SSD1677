@@ -36,19 +36,8 @@ This is easily achieved by downloading
 or individual libraries can be installed using
 `circup <https://github.com/adafruit/circup>`_.
 
-
-
-.. todo:: Describe the Adafruit product this library works with. For PCBs, you can also add the
-image from the assets folder in the PCB's GitHub repo.
-
-`Purchase one from the Adafruit shop <http://www.adafruit.com/products/>`_
-
 Installing from PyPI
 =====================
-.. note:: This library is not available on PyPI yet. Install documentation is included
-   as a standard element. Stay tuned for PyPI availability!
-
-.. todo:: Remove the above note if PyPI version is/will be available at time of release.
 
 On supported GNU/Linux systems like the Raspberry Pi, you can install the driver locally `from
 PyPI <https://pypi.org/project/adafruit-circuitpython-ssd1677/>`_.
@@ -99,8 +88,42 @@ Or the following command to update an existing version:
 Usage Example
 =============
 
-.. todo:: Add a quick, simple example. It and other examples should live in the
-examples folder and be included in docs/examples.rst.
+.. code-block:: python
+
+    import time
+    import board
+    import displayio
+    import fourwire
+    import adafruit_ssd1677
+
+    displayio.release_displays()
+
+    spi = board.SPI()
+    epd_cs = board.EPD_CS
+    epd_dc = board.EPD_DC
+    epd_reset = board.EPD_RESET
+    epd_busy = board.EPD_BUSY
+
+    display_bus = fourwire.FourWire(
+        spi, command=epd_dc, chip_select=epd_cs, reset=epd_reset, baudrate=1000000
+    )
+    time.sleep(1)
+    display = adafruit_ssd1677.SSD1677(
+        display_bus,
+        width=800,
+        height=480,
+        busy_pin=epd_busy,
+        rotation=0,
+    )
+
+    g = displayio.Group()
+
+    pic = displayio.OnDiskBitmap("/display-ruler-720p.bmp")
+    t = displayio.TileGrid(pic, pixel_shader=pic.pixel_shader)
+
+    g.append(t)
+    display.root_group = g
+    display.refresh()
 
 Documentation
 =============

@@ -24,6 +24,7 @@ from epaperdisplay import EPaperDisplay
 
 try:
     import typing
+
     from fourwire import FourWire
 except ImportError:
     pass
@@ -34,26 +35,26 @@ __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_SSD1677.git"
 _START_SEQUENCE = (
     b"\x12\x80\x00\x14"  # soft reset, wait 20ms
     b"\x18\x00\x01\x80"  # temperature sensor control (internal)
-    b"\x0C\x00\x05\xAE\xC7\xC3\xC0\x40"  # booster soft start
-    b"\x01\x00\x03\xDF\x01\x02"  # driver output control: 480 gates, GD=0, SM=1, TB=0
+    b"\x0c\x00\x05\xae\xc7\xc3\xc0\x40"  # booster soft start
+    b"\x01\x00\x03\xdf\x01\x02"  # driver output control: 480 gates, GD=0, SM=1, TB=0
     b"\x11\x00\x01\x01"  # data entry mode: X inc, Y dec
-    b"\x3C\x00\x01\x01"  # border waveform control
+    b"\x3c\x00\x01\x01"  # border waveform control
     # Set RAM X window: 0 to 799 (pixel addressing, little-endian 2 bytes each)
-    b"\x44\x00\x04\x00\x00\x1F\x03"
+    b"\x44\x00\x04\x00\x00\x1f\x03"
     # Set RAM Y window: 479 down to 0 (reversed for Y-decrement mode)
-    b"\x45\x00\x04\xDF\x01\x00\x00"
+    b"\x45\x00\x04\xdf\x01\x00\x00"
     # Set RAM X counter to 0
-    b"\x4E\x00\x02\x00\x00"
+    b"\x4e\x00\x02\x00\x00"
     # Set RAM Y counter to 479
-    b"\x4F\x00\x02\xDF\x01"
+    b"\x4f\x00\x02\xdf\x01"
     # Auto write BW RAM (clear to white), wait busy
-    b"\x46\x80\x01\xF7\xFF"
+    b"\x46\x80\x01\xf7\xff"
     # Auto write RED RAM (clear to white), wait busy
-    b"\x47\x80\x01\xF7\xFF"
+    b"\x47\x80\x01\xf7\xff"
     # Display update control 1: bypass RED as 0
     b"\x21\x00\x02\x40\x00"
     # Display update control 2: full refresh with OTP LUT
-    b"\x22\x00\x01\xF7"
+    b"\x22\x00\x01\xf7"
 )
 
 _STOP_SEQUENCE = (

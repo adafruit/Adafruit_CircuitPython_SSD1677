@@ -2,12 +2,14 @@
 #
 # SPDX-License-Identifier: MIT
 
-'''Simple demo for the SSD1677 ePaper driver'''
+"""Simple demo for the SSD1677 ePaper driver"""
 
 import time
+
 import board
 import displayio
 import fourwire
+
 import adafruit_ssd1677
 
 displayio.release_displays()
